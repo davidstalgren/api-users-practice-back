@@ -4,11 +4,13 @@ var router = express.Router();
 let users = [
   {
     id: 1,
-    name: 'John'
+    name: 'John',
+    likes: 'Stuff, more stuff, and even mooooore stuff'
   },
   {
     id: 2,
-    name: 'Jane'
+    name: 'Jane',
+    password: 'test'
   },
   {
     id: 3,
@@ -18,6 +20,10 @@ let users = [
     id: 4,
     name: 'Alice'
   },
+  {
+    id: 5,
+    name: 'DavvE'
+  },
 ]
 
 /* GET users listing. */
@@ -25,8 +31,29 @@ router.get('/', function(req, res, next) {
   res.json(users);
 });
 
+router.get('/:userId', function(req, res, next) {
+  userId = req.params.userId;
+  console.log(userId);
+
+  findUser = users.find(user => user.id == userId);
+
+  res.json(findUser);
+});
+
+router.post('/', function(req, res, next) {
+
+  let newUser = req.body
+  newUser.id = users.length + 1;
+  users.push(newUser)
+  console.log(newUser);
+
+  res.json(users);
+});
+
 router.get('/test', function(req, res, next) {
   res.send('test routen');
 });
+
+
 
 module.exports = router;
